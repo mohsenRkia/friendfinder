@@ -15,16 +15,38 @@
 //    return view('welcome');
 //});
 
+// ADMIN PANEL
+Route::group(['prefix' => 'admin'],function (){
+
+    Route::get('/',[
+        'uses' => 'AdminPanelController@index',
+        'as' => 'admin.index'
+    ]);
+});
+
+// USER PANEL
+Route::group(['prefix' => 'user'],function (){
+
+    Route::get('/',[
+        'uses' => 'UserPanelController@index',
+        'as' => 'user.index'
+    ]);
+});
+
+
+//HOME
 Route::get('/',[
-   'uses' => 'v1\HomeController@index',
+   'uses' => 'HomeController@index',
    'as' => 'home.index'
 ]);
 
+
+// USERS
 Route::post('/users/register',[
-    'uses' => 'v1\UserController@store',
+    'uses' => 'UserController@store',
     'as' => 'user.store'
 ]);
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');

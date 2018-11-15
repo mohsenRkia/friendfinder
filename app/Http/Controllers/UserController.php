@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers;
 
+use App\Jobs\VerifyUsersRegistered;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,6 +29,7 @@ class UserController extends Controller
         $user->password = $password;
 
         if ($user->save()){
+            dispatch(new VerifyUsersRegistered($user));
             return redirect()->back();
         }else{
             echo "not register";
