@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>@yield('title')</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/css/admin/rtl/bootstrap.min.css" rel="stylesheet">
@@ -32,6 +32,7 @@
     <!-- Custom Fonts -->
     <link href="/css/admin/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -46,7 +47,7 @@
 <div id="wrapper">
 
     <!-- Navigation -->
-    @include('v1.admin.layouts.navigation')
+    @include('v1.user.layouts.navigation')
 
 
     @yield('content')

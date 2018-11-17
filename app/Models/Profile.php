@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    //
+    protected $fillable = ['avatar', 'nickname', 'bio','birthdate', 'gender', 'phone','location', 'job'];
 }

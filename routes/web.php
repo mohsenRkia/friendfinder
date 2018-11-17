@@ -15,6 +15,14 @@
 //    return view('welcome');
 //});
 
+
+//HOME
+Route::get('/',[
+    'uses' => 'HomeController@index',
+    'as' => 'home.index'
+]);
+
+
 // ADMIN PANEL
 Route::group(['prefix' => 'admin'],function (){
 
@@ -25,20 +33,24 @@ Route::group(['prefix' => 'admin'],function (){
 });
 
 // USER PANEL
-Route::group(['prefix' => 'user'],function (){
+Route::group(['prefix' => 'user','middleware' => 'verified'],function (){
 
     Route::get('/',[
         'uses' => 'UserPanelController@index',
         'as' => 'user.index'
     ]);
+
+    Route::get('/edit/{id}',[
+        'uses' => 'UserPanelController@edit',
+        'as' => 'user.edit'
+    ]);
+
+    Route::post('/update/{id}',[
+        'uses' => 'UserPanelController@update',
+        'as' => 'user.update'
+    ]);
 });
 
-
-//HOME
-Route::get('/',[
-   'uses' => 'HomeController@index',
-   'as' => 'home.index'
-]);
 
 
 // USERS

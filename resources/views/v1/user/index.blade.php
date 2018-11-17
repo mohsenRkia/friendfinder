@@ -1,5 +1,6 @@
-@extends('v1.admin.layouts.layouts')
+@extends('v1.user.layouts.layouts')
 
+@section('title','پروفایل شما')
 
 @section('content')
 

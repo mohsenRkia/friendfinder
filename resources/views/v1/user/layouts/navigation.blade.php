@@ -206,12 +206,19 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a href="{{route('user.index')}}"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }} خوش آمدید</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li><a href="{{route('user.edit',['id' => Auth::user()->id])}}"><i class="fa fa-gear fa-fw"></i> تنظیمات</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    <i class="fa fa-sign-out fa-fw"></i></a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
@@ -235,10 +242,13 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a class="active" href="{{route('home.index')}}"><i class="fa fa-dashboard fa-fw"></i> سایت</a>
                 </li>
                 <li>
-                    <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> اطلاعات کاربری</a>
+                    <a class="active" href="{{route('user.index')}}"><i class="fa fa-dashboard fa-fw"></i> داشبورد</a>
+                </li>
+                <li>
+                    <a class="active" href="{{route('user.edit',['id' => Auth::user()->id])}}"><i class="fa fa-dashboard fa-fw"></i> اطلاعات کاربری</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
