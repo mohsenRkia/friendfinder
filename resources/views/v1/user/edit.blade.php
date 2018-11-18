@@ -19,7 +19,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{route('user.update',['id' => $firstInfo->id])}}" method="POST">
+                    <form action="{{route('user.update',['id' => $firstInfo->id])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                     <div class="row">
                         <div class="col-lg-12">
@@ -75,7 +75,7 @@
                                             @foreach($secondInfo as $second)
 
                                                 @if($second->avatar)
-                                                    <img src="{{$second->avatar}}" alt="" width="150" height="150">
+                                                    <img src="/uploads/avatars/uplode/{{$second->avatar}}" alt="" width="150" height="150">
                                                 @else
                                                     <img src="/uploads/avatars/avatar.png" alt="" width="150" height="150">
                                                 @endif
@@ -105,8 +105,12 @@
                                                         <select class="form-control" name="gender">
                                                             @if($second->gender == 1)
                                                                 <option value="1">مرد</option>
-                                                            @elseif($second->gender == 1)
                                                                 <option value="2">زن</option>
+                                                                <option value="0">نامشخص</option>
+                                                            @elseif($second->gender == 2)
+                                                                <option value="2">زن</option>
+                                                                <option value="1">مرد</option>
+                                                                <option value="0">نا مشخص</option>
                                                                 @else
                                                                 <option value="0">جنسیت</option>
                                                                 <option value="1">مرد</option>
