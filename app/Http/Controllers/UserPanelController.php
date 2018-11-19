@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Profile;
 use App\User;
 use Illuminate\Validation\Rule;
@@ -20,7 +21,6 @@ class UserPanelController extends Controller
         $firstInfo = User::find($id);
         $secondInfo = $profile->where('users_id' , $id)->get();
 
-        //dd($secondInfo->toArray());
         return view('v1.user.edit',compact(['firstInfo' , 'secondInfo']));
 
     }
@@ -39,7 +39,7 @@ class UserPanelController extends Controller
 
     if ($user->save()){
 
-        $valid = $request->validate([
+        $request->validate([
             'avatar' => 'between:1,500|mimes:jpeg,jpg,png|dimensions:min_width=150,min_height=150|dimensions:max_width=1280,max_height=1280',
             'nickname' => 'nullable|alpha_dash|max:80',
             'bio' => 'nullable|max:500',
@@ -68,10 +68,16 @@ class UserPanelController extends Controller
         $profile->job = $request->job;
 
         if ($profile->save()){
+            Log::create([
+                'users_id' => $user->id,
+                'activity' => 2
+            ]);
+
             return redirect()->back();
         }
     }
 
     return redirect()->back();
     }
+
 }

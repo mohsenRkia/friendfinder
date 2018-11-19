@@ -74,11 +74,7 @@
                                         <div class="col-lg-12">
                                             @foreach($secondInfo as $second)
 
-                                                @if($second->avatar)
-                                                    <img src="/uploads/avatars/uplode/{{$second->avatar}}" alt="" width="150" height="150">
-                                                @else
-                                                    <img src="/uploads/avatars/avatar.png" alt="" width="150" height="150">
-                                                @endif
+                                                <img src="/uploads/avatars/uplode/{{$second->avatar}}" alt="" width="150" height="150">
                                                     <div class="form-group">
                                                         <label>اپلود تصویر</label>
                                                         <input type="file" name="avatar">

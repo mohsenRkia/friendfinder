@@ -11,14 +11,17 @@
     <!-- Stylesheets
     ================================================= -->
     <link rel="stylesheet" href="/css/app.css" />
+
     <link rel="stylesheet" href="/css/ionicons.min.css" />
     <link rel="stylesheet" href="/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/mystyle.css" />
     <!--Google Webfont-->
-    <link href='/css/site/fontegoogle.css' rel='stylesheet' type='text/css'>
+    <link href='/css/fontegoogle.css' rel='stylesheet' type='text/css'>
     <!--Favicon-->
     <link rel="shortcut icon" type="image/png" href="/images/fav.png"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body>
 

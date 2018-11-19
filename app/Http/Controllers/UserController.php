@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\VerifyUsersRegistered;
+use App\Models\Log;
 use App\Models\Profile;
 use App\User;
 use Illuminate\Http\Request;
@@ -34,13 +35,20 @@ class UserController extends Controller
 
             $profile->users_id = $user->id;
             $profile->gender = 0;
+            $profile->avatar = "avatar.png";
+
             if ($profile->save()){
+                Log::create([
+                    'users_id' => $user->id,
+                    'activity' => 1
+                ]);
+
                 return redirect()->back();
             }else{
                 dd('not Save');
             }
         }else{
-            echo "not register";
+            dd("not register");
         }
     }
 }

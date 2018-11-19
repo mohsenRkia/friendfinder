@@ -32,17 +32,17 @@
                     <form action="{{ route('user.store') }}" method="POST">
                         @csrf
                         <fieldset class="form-group">
-                            <input type="text" class="form-control" id="example-name" placeholder="Enter name" name="name" value="{{ old('name') }}" required>
+                            <input type="text" class="form-control" id="example-name" placeholder="Enter name" name="name" value="{{ old('name') }}">
                         </fieldset>
                         <fieldset class="form-group">
-                            <input type="email" class="form-control" id="example-email" placeholder="Enter email" name="email" value="{{ old('email') }}" required>
+                            <input type="email" class="form-control" id="example-email" placeholder="Enter email" name="email" value="{{ old('email') }}">
                         </fieldset>
                         <fieldset class="form-group">
-                            <input type="password" class="form-control" id="example-password" placeholder="Enter a password" name="password" required>
+                            <input type="password" class="form-control" id="example-password" placeholder="Enter a password" name="password">
                         </fieldset>
 
                         <p>By signning up you agree to the terms</p>
-                        <button class="btn-secondary" type="submit">{{ __('Register') }}</button>
+                        <button class="btn-secondary" type="submit">Register</button>
                     </form>
 
                 </div>

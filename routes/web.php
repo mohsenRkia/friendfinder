@@ -49,15 +49,28 @@ Route::group(['prefix' => 'user','middleware' => 'verified'],function (){
         'uses' => 'UserPanelController@update',
         'as' => 'user.update'
     ]);
+
+
+    //USER PROFILE
+    Route::get('/{id}/{name}',[
+        'uses' => 'ProfileController@profile',
+        'as' => 'user.profile.index'
+    ]);
+
+
+
 });
 
-
-
-// USERS
-Route::post('/users/register',[
+//USER REGISTER
+Route::post('/registered',[
     'uses' => 'UserController@store',
     'as' => 'user.store'
 ]);
+
+
+
+
+
 
 Auth::routes(['verify' => true]);
 

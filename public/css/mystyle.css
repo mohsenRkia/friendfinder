@@ -16,5 +16,15 @@ ul.online-users li{
 ul.social-icons li{
     display: inline-block;
 }
-
+.timeline-cover .timeline-nav-bar .follow-me li{
+    display: inline-block;
+}
+.list-inline > li{
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.live-activity > p{
+    margin: 0 0 10px;
+}
 
