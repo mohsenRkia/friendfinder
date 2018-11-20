@@ -27,4 +27,18 @@ ul.social-icons li{
 .live-activity > p{
     margin: 0 0 10px;
 }
+.timeline-cover{
+    background:unset;
+}
 
+.timeline-cover > img{
+    background-position: center;
+
+    background-size: cover;
+
+    min-height: 360px;
+
+    border-radius: 0 0 4px 4px;
+
+    position: relative;
+}

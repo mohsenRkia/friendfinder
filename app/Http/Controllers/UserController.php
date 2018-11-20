@@ -36,6 +36,7 @@ class UserController extends Controller
             $profile->users_id = $user->id;
             $profile->gender = 0;
             $profile->avatar = "avatar.png";
+            $profile->bgprofile = "bgprofiles.jpg";
 
             if ($profile->save()){
                 Log::create([

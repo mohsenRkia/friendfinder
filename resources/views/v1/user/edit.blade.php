@@ -79,7 +79,13 @@
                                                         <label>اپلود تصویر</label>
                                                         <input type="file" name="avatar">
                                                     </div>
-
+                                                <hr>
+                                                <img src="/uploads/bgprofiles/uplode/{{$second->bgprofile}}" alt="" width="300" height="100">
+                                                <div class="form-group">
+                                                    <label>اپلود تصویر</label>
+                                                    <input type="file" name="bgprofile">
+                                                </div>
+                                                <hr>
                                                     <div class="form-group">
                                                         <input class="form-control" name="nickname" placeholder="نام مستعار" value="{{$second->nickname}}">
                                                     </div>

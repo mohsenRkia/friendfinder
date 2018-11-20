@@ -11,7 +11,7 @@
         <div class="timeline">
             @foreach($profiles as $profile)
             <div class="timeline-cover">
-
+                    <img src="/uploads/bgprofiles/uplode/{{$profile->bgprofile}}" alt="" width="100%">
                 <!--Timeline Menu for Large Screens-->
                 <div class="timeline-nav-bar hidden-sm hidden-xs">
                     <div class="row">
@@ -246,6 +246,7 @@
                                     {{$user->name}}
                                 @endif
                                 's activity</h4>
+                            @foreach($logs as $log)
                             <div class="feed-item">
                                 <div class="live-activity">
                                     <p><a href="#" class="profile-link">
@@ -254,46 +255,30 @@
                                             @else
                                                 {{$user->name}}
                                             @endif
-                                        </a> Commended on a Photo</p>
-                                    <p class="text-muted">5 mins ago</p>
+                                        </a>
+                                        @switch($log->activity)
+                                            @case(1)
+                                            Registered
+                                            @break
+                                            @case(2)
+                                            Edited Information
+                                            @break
+                                            @case(3)
+                                            Posted
+                                            @break
+                                            @case(4)
+                                            Followed a friend
+                                            @break
+                                            @case(5)
+                                            Commented on a friend Post
+                                            @break
+                                        @endswitch
+                                    </p>
+                                    <p class="text-muted">{{$log->created_at}}</p>
                                 </div>
                             </div>
-                            <div class="feed-item">
-                                <div class="live-activity">
-                                    <p><a href="#" class="profile-link">
-                                            @if($profile->nickname)
-                                                {{$profile->nickname}}
-                                            @else
-                                                {{$user->name}}
-                                            @endif
-                                        </a> Has posted a photo</p>
-                                    <p class="text-muted">an hour ago</p>
-                                </div>
-                            </div>
-                            <div class="feed-item">
-                                <div class="live-activity">
-                                    <p><a href="#" class="profile-link">
-                                            @if($profile->nickname)
-                                                {{$profile->nickname}}
-                                            @else
-                                                {{$user->name}}
-                                            @endif
-                                        </a> Liked her friend's post</p>
-                                    <p class="text-muted">4 hours ago</p>
-                                </div>
-                            </div>
-                            <div class="feed-item">
-                                <div class="live-activity">
-                                    <p><a href="#" class="profile-link">
-                                            @if($profile->nickname)
-                                                {{$profile->nickname}}
-                                            @else
-                                                {{$user->name}}
-                                            @endif
-                                        </a> has shared an album</p>
-                                    <p class="text-muted">a day ago</p>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ class CreateProfilesTable extends Migration
             $table->increments('id');
             $table->integer('users_id')->unsigned();
             $table->string('avatar')->nullable();
+            $table->string('bgprofile')->nullable();
             $table->string('nickname',50)->nullable();
             $table->text('bio')->nullable();
             $table->string('birthdate')->nullable();

@@ -51,15 +51,13 @@ Route::group(['prefix' => 'user','middleware' => 'verified'],function (){
     ]);
 
 
-    //USER PROFILE
-    Route::get('/{id}/{name}',[
-        'uses' => 'ProfileController@profile',
-        'as' => 'user.profile.index'
-    ]);
-
-
 
 });
+//USER PROFILE
+Route::get('/user/{id}/{name}',[
+    'uses' => 'ProfileController@profile',
+    'as' => 'user.profile.index'
+]);
 
 //USER REGISTER
 Route::post('/registered',[
