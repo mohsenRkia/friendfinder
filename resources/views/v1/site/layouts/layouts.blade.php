@@ -29,11 +29,11 @@
 @include('v1.site.layouts.header')
 <!--Header End-->
 
-
+<div id="profile">
 <!-- Content -->
 @yield('content')
 <!-- Content End -->
-
+</div>
 
 
 

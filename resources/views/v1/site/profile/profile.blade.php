@@ -40,8 +40,27 @@
                                 <li><a href="timeline-friends.html">Friends</a></li>
                             </ul>
                             <ul class="follow-me list-inline">
-                                <li>1,299 people following her</li>
-                                <li><button class="btn-primary">Add Friend</button></li>
+                                <li>Follower : {{$hasFollower}}</li>
+                                <li>Following : {{$hasFollowing}}</li>
+                                @if(Auth::user())
+                                    @if(Auth::user()->id === $user->id)
+                                <li><button class="btn-primary">Welcome</button></li>
+                                    @else
+                                        @if($friend)
+                                            @if($friend->iswhat === 0)
+                                                <li><button class="btn btn-primary" @click="addFriend({{$user->id}},{{Auth::user()->id}},$event)">Add Friend</button></li>
+                                            @elseif($friend->iswhat === 1)
+                                                <li><button class="btn btn-success" @click="addFriend({{$user->id}},{{Auth::user()->id}},$event)">Followed</button></li>
+                                            @endif
+
+                                        @else
+                                            <li><button class="btn btn-primary" @click="addFriend({{$user->id}},{{Auth::user()->id}},$event)">Add Friend</button></li>
+                                        @endif
+
+                                    @endif
+                                @else
+                                    <li><button class="btn-primary">You're Guest</button></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -267,7 +286,7 @@
                                             Posted
                                             @break
                                             @case(4)
-                                            Followed a friend
+                                            Make Friend With Somone
                                             @break
                                             @case(5)
                                             Commented on a friend Post

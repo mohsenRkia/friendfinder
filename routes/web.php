@@ -58,6 +58,10 @@ Route::get('/user/{id}/{name}',[
     'uses' => 'ProfileController@profile',
     'as' => 'user.profile.index'
 ]);
+Route::post('/user/follow/{id}',[
+    'uses' => 'ProfileController@follow',
+    'as' => 'user.follow'
+]);
 
 //USER REGISTER
 Route::post('/registered',[

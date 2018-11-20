@@ -31,6 +31,29 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app'
+const profile = new Vue({
+    el: '#profile',
+    data:{
+
+    },
+    methods:{
+        addFriend:function($friendId,$currentUserId,e){
+          axios.post('/user/follow/'+$friendId,{
+              currentUserId : $currentUserId,
+          }).then(response => {
+          if (response.data === 1){
+              e.target.innerHTML = "Followed";
+              e.target.className = "btn btn-success";
+          }else if(response.data === 0){
+              e.target.innerHTML = "Add Friend";
+              e.target.className = "btn btn-primary";
+          }
+
+
+          });
+
+            //console.log(e.target);
+
+        },
+    }
 });

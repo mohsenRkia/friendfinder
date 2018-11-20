@@ -13921,8 +13921,26 @@ Vue.component('example-component', __webpack_require__(39));
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app'
+var profile = new Vue({
+    el: '#profile',
+    data: {},
+    methods: {
+        addFriend: function addFriend($friendId, $currentUserId, e) {
+            axios.post('/user/follow/' + $friendId, {
+                currentUserId: $currentUserId
+            }).then(function (response) {
+                if (response.data === 1) {
+                    e.target.innerHTML = "Followed";
+                    e.target.className = "btn btn-success";
+                } else if (response.data === 0) {
+                    e.target.innerHTML = "Add Friend";
+                    e.target.className = "btn btn-primary";
+                }
+            });
+
+            //console.log(e.target);
+        }
+    }
 });
 
 /***/ }),

@@ -17,7 +17,7 @@ class CreateFriendsTable extends Migration
             $table->increments('id');
             $table->integer('users_id')->unsigned();
             $table->integer('myfriend_id')->unsigned();
-            $table->boolean('isBlock')->default(0);
+            $table->integer('isWhat')->default(0);
             $table->timestamps();
 
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
