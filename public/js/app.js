@@ -13923,10 +13923,14 @@ Vue.component('example-component', __webpack_require__(39));
 
 var profile = new Vue({
     el: '#profile',
-    data: {},
+    data: {
+        textPost: "",
+        userid: [],
+        posts: []
+    },
     methods: {
         addFriend: function addFriend($friendId, $currentUserId, e) {
-            axios.post('/user/follow/' + $friendId, {
+            axios.post('/profile/follow/' + $friendId, {
                 currentUserId: $currentUserId
             }).then(function (response) {
                 if (response.data === 1) {
@@ -13937,9 +13941,24 @@ var profile = new Vue({
                     e.target.className = "btn btn-primary";
                 }
             });
-
-            //console.log(e.target);
+        },
+        sendPost: function sendPost($id) {
+            var data = new FormData();
+            var file = this.$refs.imagePost.files[0];
+            data.append('image', file);
+            data.append('text', this.textPost);
+            axios.post('/profile/sendpost/' + $id, data);
+            //this.$refs.imagePost.files[0]
+        },
+        getPosts: function getPosts($id) {
+            alert($id);
+            //axios.post(path,{
+            //
+            //}).then(response => {
+            //    this.posts = response.data;
+            //});
         }
+
     }
 });
 

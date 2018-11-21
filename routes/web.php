@@ -53,15 +53,24 @@ Route::group(['prefix' => 'user','middleware' => 'verified'],function (){
 
 
 });
-//USER PROFILE
-Route::get('/user/{id}/{name}',[
-    'uses' => 'ProfileController@profile',
-    'as' => 'user.profile.index'
-]);
-Route::post('/user/follow/{id}',[
-    'uses' => 'ProfileController@follow',
-    'as' => 'user.follow'
-]);
+
+Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
+    //USER PROFILE
+    Route::get('/{id}/{name}',[
+        'uses' => 'ProfileController@profile',
+        'as' => 'user.profile.index'
+    ]);
+    Route::post('/follow/{id}',[
+        'uses' => 'ProfileController@follow',
+        'as' => 'user.follow'
+    ]);
+
+    Route::post('/sendpost/{id}',[
+        'uses' => 'PostController@send',
+        'as' => 'post.send'
+    ]);
+});
+
 
 //USER REGISTER
 Route::post('/registered',[

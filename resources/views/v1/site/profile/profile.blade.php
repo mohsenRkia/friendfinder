@@ -42,7 +42,6 @@
                             <ul class="follow-me list-inline">
                                 <li>Follower : {{$hasFollower}}</li>
                                 <li>Following : {{$hasFollowing}}</li>
-                                @if(Auth::user())
                                     @if(Auth::user()->id === $user->id)
                                 <li><button class="btn-primary">Welcome</button></li>
                                     @else
@@ -52,15 +51,11 @@
                                             @elseif($friend->iswhat === 1)
                                                 <li><button class="btn btn-success" @click="addFriend({{$user->id}},{{Auth::user()->id}},$event)">Followed</button></li>
                                             @endif
-
                                         @else
                                             <li><button class="btn btn-primary" @click="addFriend({{$user->id}},{{Auth::user()->id}},$event)">Add Friend</button></li>
                                         @endif
 
                                     @endif
-                                @else
-                                    <li><button class="btn-primary">You're Guest</button></li>
-                                @endif
                             </ul>
                         </div>
                     </div>
@@ -73,6 +68,7 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-7">
 
+                    @if(Auth::user()->id === $user->id)
                         <!-- Post Create Box
                         ================================================= -->
                         <div class="create-post">
@@ -80,27 +76,37 @@
                                 <div class="col-md-7 col-sm-7">
                                     <div class="form-group">
                                         <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-md" />
-                                        <textarea name="texts" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish"></textarea>
+                                        <textarea name="text" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish" v-model="textPost"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-5 col-sm-5">
                                     <div class="tools">
                                         <ul class="publishing-tools list-inline">
-                                            <li><a href="#"><i class="ion-compose"></i></a></li>
-                                            <li><a href="#"><i class="ion-images"></i></a></li>
-                                            <li><a href="#"><i class="ion-ios-videocam"></i></a></li>
-                                            <li><a href="#"><i class="ion-map"></i></a></li>
+                                            <li>
+                                                <div class="image-upload">
+                                                    <label for="file-input">
+                                                        <span><i class="ion-images"></i></span>
+                                                    </label>
+
+                                                    <input id="file-input" type="file" name="image" ref="imagePost"/>
+                                                </div>
+                                            </li>
                                         </ul>
-                                        <button class="btn btn-primary pull-right">Publish</button>
+                                        <button class="btn btn-primary pull-right" @click="sendPost({{$user->id}})">Publish</button>
                                     </div>
                                 </div>
                             </div>
                         </div><!-- Post Create Box End-->
-
+                    @else
+                    <span class="myBiography">
+                        <h3>BioGraphy</h3>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </span>
+                            <hr>
+                    @endif
                         <!-- Post Content
                         ================================================= -->
                         <div class="post-content">
-
                             <!--Post Date-->
                             <div class="post-date hidden-xs hidden-sm">
                                 @if($profile->nickname)
@@ -122,116 +128,17 @@
                                                 @else
                                                     <h3>{{$user->name}}</h3>
                                                 @endif
-                                            </a> <span class="following">following</span></h5>
+                                            </a> <span class="following">
+                                                @if($friend && $friend->iswhat === 1)
+                                                    Following
+                                                    @else
+                                                    No Follow
+                                                @endif
+                                            </span></h5>
                                         <p class="text-muted">Published a photo about 15 mins ago</p>
                                     </div>
                                     <div class="reaction">
                                         <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
-                                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
-                                    </div>
-                                    <div class="line-divider"></div>
-                                    <div class="post-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
-                                    </div>
-                                    <div class="line-divider"></div>
-                                    <div class="post-comment">
-                                        <img src="/images/users/user-11.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                    </div>
-                                    <div class="post-comment">
-                                        <img src="/images/users/user-4.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                    </div>
-                                    <div class="post-comment">
-                                        <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
-                                        <input type="text" class="form-control" placeholder="Post a comment">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Post Content
-                        ================================================= -->
-                        <div class="post-content">
-
-                            <!--Post Date-->
-                            <div class="post-date hidden-xs hidden-sm">
-                                @if($profile->nickname)
-                                    <h5>{{$profile->nickname}}</h5>
-                                @else
-                                    <h5>{{$user->name}}</h5>
-                                @endif
-                                <p class="text-grey">10/22/2016</p>
-                            </div><!--Post Date End-->
-
-                            <img src="/images/post-images/13.jpg" alt="post-image" class="img-responsive post-image" />
-                            <div class="post-container">
-                                <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="user" class="profile-photo-md pull-left" />
-                                <div class="post-detail">
-                                    <div class="user-info">
-                                        <h5><a href="{{route('user.profile.index',['id' => $user->id,'name' => $user->name])}}" class="profile-link">
-                                                @if($profile->nickname)
-                                                    <h3>{{$profile->nickname}}</h3>
-                                                @else
-                                                    <h3>{{$user->name}}</h3>
-                                                @endif
-                                            </a> <span class="following">following</span></h5>
-                                        <p class="text-muted">Yesterday</p>
-                                    </div>
-                                    <div class="reaction">
-                                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 49</a>
-                                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
-                                    </div>
-                                    <div class="line-divider"></div>
-                                    <div class="post-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
-                                    </div>
-                                    <div class="line-divider"></div>
-                                    <div class="post-comment">
-                                        <img src="/images/users/user-11.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                    </div>
-                                    <div class="post-comment">
-                                        <img src="/images/users/user-4.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                    </div>
-                                    <div class="post-comment">
-                                        <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
-                                        <input type="text" class="form-control" placeholder="Post a comment">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Post Content
-                        ================================================= -->
-                        <div class="post-content">
-
-                            <!--Post Date-->
-                            <div class="post-date hidden-xs hidden-sm">
-                                @if($profile->nickname)
-                                    <h5>{{$profile->nickname}}</h5>
-                                @else
-                                    <h5>{{$user->name}}</h5>
-                                @endif
-                                <p class="text-grey">10/21/2016</p>
-                            </div><!--Post Date End-->
-
-                            <div class="post-container">
-                                <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="user" class="profile-photo-md pull-left" />
-                                <div class="post-detail">
-                                    <div class="user-info">
-                                        <h5><a href="{{route('user.profile.index',['id' => $user->id,'name' => $user->name])}}" class="profile-link">
-                                                @if($profile->nickname)
-                                                    <h3>{{$profile->nickname}}</h3>
-                                                @else
-                                                    <h3>{{$user->name}}</h3>
-                                                @endif
-                                            </a> <span class="following">following</span></h5>
-                                        <p class="text-muted">2 days ago</p>
-                                    </div>
-                                    <div class="reaction">
-                                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 49</a>
                                         <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
                                     </div>
                                     <div class="line-divider"></div>

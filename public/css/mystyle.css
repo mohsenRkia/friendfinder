@@ -42,3 +42,14 @@ ul.social-icons li{
 
     position: relative;
 }
+span.myBiography{
+    padding: 5px;
+}
+.image-upload > input
+{
+    display: none;
+}
+span > i.ion-images{
+    font-size: 20px;
+    cursor: pointer;
+}
