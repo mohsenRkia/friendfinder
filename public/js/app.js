@@ -13943,11 +13943,16 @@ var profile = new Vue({
             });
         },
         sendPost: function sendPost($id) {
+            var _this = this;
+
             var data = new FormData();
             var file = this.$refs.imagePost.files[0];
             data.append('image', file);
             data.append('text', this.textPost);
-            axios.post('/profile/sendpost/' + $id, data);
+            axios.post('/profile/sendpost/' + $id, data).then(function (response) {
+                _this.posts.unshift({ text: response.data.text, created_at: response.data.created_at, path: response.data.file.path });
+                _this.$forceUpdate();
+            });
             //this.$refs.imagePost.files[0]
         },
         getPosts: function getPosts($id) {

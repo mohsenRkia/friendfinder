@@ -59,7 +59,10 @@ const profile = new Vue({
             var file = this.$refs.imagePost.files[0];
             data.append('image',file);
             data.append('text',this.textPost);
-            axios.post('/profile/sendpost/'+$id,data);
+            axios.post('/profile/sendpost/'+$id,data).then(response=>{
+                this.posts.unshift({text:response.data.text,created_at:response.data.created_at,path:response.data.file.path});
+                this.$forceUpdate();
+            });
             //this.$refs.imagePost.files[0]
         },
         getPosts:function ($id) {

@@ -16,10 +16,10 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->string('path');
-            $table->integer('posts_id')->unsigned();
+            $table->integer('post_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('posts_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });
     }
 

@@ -9,7 +9,7 @@
         <!-- Timeline
         ================================================= -->
         <div class="timeline">
-            @foreach($profiles as $profile)
+
             <div class="timeline-cover">
                     <img src="/uploads/bgprofiles/uplode/{{$profile->bgprofile}}" alt="" width="100%">
                 <!--Timeline Menu for Large Screens-->
@@ -100,13 +100,19 @@
                     @else
                     <span class="myBiography">
                         <h3>BioGraphy</h3>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        @if($profile->bio)
+                            {{$profile->bio}}
+                        @else
+                        Please Write Some Lines About Yoursaelf
+                        @endif
                     </span>
                             <hr>
                     @endif
-                        <!-- Post Content
-                        ================================================= -->
-                        <div class="post-content">
+
+
+
+                    <!-- Post Content Vue -->
+                        <div class="post-content" v-for="post in posts">
                             <!--Post Date-->
                             <div class="post-date hidden-xs hidden-sm">
                                 @if($profile->nickname)
@@ -114,10 +120,10 @@
                                 @else
                                     <h5>{{$user->name}}</h5>
                                 @endif
-                                <p class="text-grey">Sometimes ago</p>
+                                <p class="text-grey">@{{post.created_at}}</p>
                             </div><!--Post Date End-->
 
-                            <img src="/images/post-images/12.jpg" alt="post-image" class="img-responsive post-image" />
+                            <img :src="'/uploads/posts/' + post.path" alt="post-image" class="img-responsive post-image" />
                             <div class="post-container">
                                 <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="user" class="profile-photo-md pull-left" />
                                 <div class="post-detail">
@@ -129,13 +135,17 @@
                                                     <h3>{{$user->name}}</h3>
                                                 @endif
                                             </a> <span class="following">
-                                                @if($friend && $friend->iswhat === 1)
-                                                    Following
+                                                @if(Auth::user()->id === $user->id)
+                                                    You Posted
+                                                @else
+                                                    @if($friend && $friend->iswhat === 1)
+                                                        Following
                                                     @else
-                                                    No Follow
+                                                        No Follow
+                                                    @endif
                                                 @endif
                                             </span></h5>
-                                        <p class="text-muted">Published a photo about 15 mins ago</p>
+                                        <p class="text-muted">@{{post.created_at}}</p>
                                     </div>
                                     <div class="reaction">
                                         <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
@@ -143,7 +153,9 @@
                                     </div>
                                     <div class="line-divider"></div>
                                     <div class="post-text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                                        <p>
+                                            @{{post.text}}
+                                        </p>
                                     </div>
                                     <div class="line-divider"></div>
                                     <div class="post-comment">
@@ -157,11 +169,84 @@
                                     <div class="post-comment">
                                         <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
                                         <input type="text" class="form-control" placeholder="Post a comment">
+                                        <button class="btn btn-success">Send</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- End Post Content Vue -->
+
+
+
+                        <!-- Post Content
+                        ================================================= -->
+                        @foreach($posts as $post)
+                        <div class="post-content">
+                            <!--Post Date-->
+                            <div class="post-date hidden-xs hidden-sm">
+                                @if($profile->nickname)
+                                    <h5>{{$profile->nickname}}</h5>
+                                @else
+                                    <h5>{{$user->name}}</h5>
+                                @endif
+                                <p class="text-grey">{{$post->created_at}}</p>
+                            </div><!--Post Date End-->
+
+                            <img src="/uploads/posts/{{$post->file->path}}" alt="post-image" class="img-responsive post-image" />
+                            <div class="post-container">
+                                <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="user" class="profile-photo-md pull-left" />
+                                <div class="post-detail">
+                                    <div class="user-info">
+                                        <h5><a href="{{route('user.profile.index',['id' => $user->id,'name' => $user->name])}}" class="profile-link">
+                                                @if($profile->nickname)
+                                                    <h3>{{$profile->nickname}}</h3>
+                                                @else
+                                                    <h3>{{$user->name}}</h3>
+                                                @endif
+                                            </a> <span class="following">
+                                                @if(Auth::user()->id === $user->id)
+                                                    You Posted
+                                                @else
+                                                    @if($friend && $friend->iswhat === 1)
+                                                        Following
+                                                    @else
+                                                        No Follow
+                                                    @endif
+                                                @endif
+                                            </span></h5>
+                                        <p class="text-muted">{{$post->created_at}}</p>
+                                    </div>
+                                    <div class="reaction">
+                                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
+                                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                                    </div>
+                                    <div class="line-divider"></div>
+                                    <div class="post-text">
+                                        <p>
+                                            {{$post->text}}
+                                        </p>
+                                    </div>
+                                    <div class="line-divider"></div>
+                                    <div class="post-comment">
+                                        <img src="/images/users/user-11.jpg" alt="" class="profile-photo-sm" />
+                                        <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                                    </div>
+                                    <div class="post-comment">
+                                        <img src="/images/users/user-4.jpg" alt="" class="profile-photo-sm" />
+                                        <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                                    </div>
+                                    <div class="post-comment">
+                                        <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
+                                        <input type="text" class="form-control" placeholder="Post a comment">
+                                        <button class="btn btn-success">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            @endforeach
+
+                        {{$posts->links()}}
                     </div>
                     <div class="col-md-2 static">
                         <div id="sticky-sidebar">
@@ -211,7 +296,7 @@
             </div>
 
 
-            @endforeach
+
         </div>
     </div>
 

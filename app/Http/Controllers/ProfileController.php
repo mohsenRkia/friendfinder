@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Friend;
 use App\Models\Log;
+use App\Models\Post;
 use App\Models\Profile;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class ProfileController extends Controller
     public function profile($id,$name)
     {
         $user = User::find($id);
-        $profiles = Profile::where('users_id',$id)->get();
+        $profile = Profile::where('users_id',$id)->first();
 
 
         if ($id == $user->id && $name === $user->name){
@@ -24,24 +25,28 @@ class ProfileController extends Controller
             $friend = Friend::where([['users_id',Auth::user()->id], ['myfriend_id',$id]])->first();
             $follower = count(Friend::where([['myfriend_id',$id]])->get());
             $following = count(Friend::where('users_id',$id)->get());
+            $posts = Post::where('users_id',$id)
+                ->with('file')
+                ->orderBy('id','DESC')
+                ->paginate(5);
 
             if ($follower){
                 $hasFollower = count(Friend::where([['myfriend_id',$id],['iswhat',1]])->get());
                 if ($following){
                     $hasFollowing = count(Friend::where([['users_id',$id],['iswhat',1]])->get());
-                    return view('v1.site.profile.profile',compact(['user','profiles','logs','friend','hasFollower','hasFollowing']));
+                    return view('v1.site.profile.profile',compact(['user','posts','profile','logs','friend','hasFollower','hasFollowing']));
                 }else{
                     $hasFollowing = 0;
-                    return view('v1.site.profile.profile',compact(['user','profiles','logs','friend','hasFollower','hasFollowing']));
+                    return view('v1.site.profile.profile',compact(['user','posts','profile','logs','friend','hasFollower','hasFollowing']));
                 }
             }else{
                 $hasFollower = 0;
                 if ($following){
                     $hasFollowing = count(Friend::where([['users_id',$id],['iswhat',1]])->get());
-                    return view('v1.site.profile.profile',compact(['user','profiles','logs','friend','hasFollower','hasFollowing']));
+                    return view('v1.site.profile.profile',compact(['user','posts','profile','logs','friend','hasFollower','hasFollowing']));
                 }else{
                     $hasFollowing = 0;
-                return view('v1.site.profile.profile',compact(['user','profiles','logs','friend','hasFollower','hasFollowing']));
+                return view('v1.site.profile.profile',compact(['user','posts','profile','logs','friend','hasFollower','hasFollowing']));
                 }
             }
 
