@@ -158,18 +158,17 @@
                                         </p>
                                     </div>
                                     <div class="line-divider"></div>
-                                    <div class="post-comment">
+                                    <div class="post-comment" v-for="comment in comments">
                                         <img src="/images/users/user-11.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                    </div>
-                                    <div class="post-comment">
-                                        <img src="/images/users/user-4.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                                        <p>
+                                            <a href="timeline.html" class="profile-link">@{{ comment.name }} </a><i class="em em-laughing"></i>
+                                            @{{ comment.text }}
+                                        </p>
                                     </div>
                                     <div class="post-comment">
                                         <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
-                                        <input type="text" class="form-control" placeholder="Post a comment">
-                                        <button class="btn btn-success">Send</button>
+                                        <input type="text" class="form-control" placeholder="Post a comment" v-model="newComment" v-once>
+                                        <button class="btn btn-success" @click="sendComment({{Auth::user()->id}},post.id)">Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -228,18 +227,30 @@
                                         </p>
                                     </div>
                                     <div class="line-divider"></div>
+                                    <template v-if="postid == '{{$post->id}}'">
+
+                                        <template v-for="comment in comments">
+                                            <div class="post-comment" v-if="comment.post_id == postid">
+                                        <img src="/images/users/user-11.jpg" alt="" class="profile-photo-sm" />
+                                        <p>
+                                            <a href="timeline.html" class="profile-link">@{{ comment.name }} </a><i class="em em-laughing"></i>
+                                            @{{ comment.text }}
+                                        </p>
+                                    </div>
+                                        </template>
+                                    </template>
+                                    @foreach($post->comments as $comment)
                                     <div class="post-comment">
                                         <img src="/images/users/user-11.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                                        <p><a href="timeline.html" class="profile-link">{{$comment->user->name}} </a><i class="em em-laughing"></i>
+                                            {{$comment->text}}
+                                        </p>
                                     </div>
-                                    <div class="post-comment">
-                                        <img src="/images/users/user-4.jpg" alt="" class="profile-photo-sm" />
-                                        <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                                    </div>
+                                    @endforeach
                                     <div class="post-comment">
                                         <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
-                                        <input type="text" class="form-control" placeholder="Post a comment">
-                                        <button class="btn btn-success">Send</button>
+                                        <input type="text" class="form-control" placeholder="Post a comment" v-model="newComment" v-once>
+                                        <button class="btn btn-success" @click="sendComment({{Auth::user()->id}},{{$post->id}})">Send</button>
                                     </div>
                                 </div>
                             </div>

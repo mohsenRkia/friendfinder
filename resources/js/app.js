@@ -35,8 +35,10 @@ const profile = new Vue({
     el: '#profile',
     data:{
         textPost:"",
-        userid:[],
-        posts:[]
+        posts:[],
+        postid:"",
+        newComment:"",
+        comments:[]
     },
     methods:{
         addFriend:function($friendId,$currentUserId,e){
@@ -60,19 +62,21 @@ const profile = new Vue({
             data.append('image',file);
             data.append('text',this.textPost);
             axios.post('/profile/sendpost/'+$id,data).then(response=>{
-                this.posts.unshift({text:response.data.text,created_at:response.data.created_at,path:response.data.file.path});
+                this.posts.unshift({id:response.data.id,text:response.data.text,created_at:response.data.created_at,path:response.data.file.path});
                 this.$forceUpdate();
             });
-            //this.$refs.imagePost.files[0]
         },
-        getPosts:function ($id) {
-            alert($id);
-            //axios.post(path,{
-//
-            //}).then(response => {
-            //    this.posts = response.data;
-            //});
-        }
+        sendComment:function ($userid,$postid) {
+            this.postid = $postid;
+            axios.post('/profile/comment/'+$postid,{
+                userid:$userid,
+                text:this.newComment
+            }).then(response=>{
+                this.comments.push({text:response.data.text,name:response.data.user.name,post_id:response.data.post_id});
+                location.reload();
+            });
+
+        },
 
     }
 });

@@ -69,6 +69,10 @@ Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
         'uses' => 'PostController@send',
         'as' => 'post.send'
     ]);
+    Route::post('/comment/{id}',[
+        'uses' => 'CommentController@send',
+        'as' => 'comment.send'
+    ]);
 });
 
 

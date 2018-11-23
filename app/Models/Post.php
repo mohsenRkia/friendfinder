@@ -13,4 +13,10 @@ class Post extends Model
     {
         return $this->hasOne(File::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Models\Log;
 use App\Models\Post;
 use App\Models\Profile;
 use App\User;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class ProfileController extends Controller
     public function profile($id,$name)
     {
         $user = User::find($id);
-        $profile = Profile::where('users_id',$id)->first();
+        $profile = Profile::where('user_id',$id)->first();
 
 
         if ($id == $user->id && $name === $user->name){
@@ -27,6 +28,11 @@ class ProfileController extends Controller
             $following = count(Friend::where('users_id',$id)->get());
             $posts = Post::where('users_id',$id)
                 ->with('file')
+                ->with(['comments' => function($q){
+                    $q->with(['user' => function($u){
+                        $u->with('profile');
+                    }]);
+                }])
                 ->orderBy('id','DESC')
                 ->paginate(5);
 

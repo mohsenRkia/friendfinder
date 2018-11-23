@@ -15,7 +15,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('users_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->string('avatar')->nullable();
             $table->string('bgprofile')->nullable();
             $table->string('nickname',50)->nullable();
@@ -27,7 +27,7 @@ class CreateProfilesTable extends Migration
             $table->string('job')->nullable();
             $table->timestamps();
 
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
 
 

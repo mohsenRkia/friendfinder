@@ -1,7 +1,7 @@
 <header id="header" class="lazy-load">
     <nav class="navbar navbar-default navbar-fixed-top menu">
         <div class="container">
-            hello
+            <input type="search">
             <hr>
             hello
             <hr>

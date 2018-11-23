@@ -13925,8 +13925,10 @@ var profile = new Vue({
     el: '#profile',
     data: {
         textPost: "",
-        userid: [],
-        posts: []
+        posts: [],
+        postid: "",
+        newComment: "",
+        comments: []
     },
     methods: {
         addFriend: function addFriend($friendId, $currentUserId, e) {
@@ -13950,18 +13952,21 @@ var profile = new Vue({
             data.append('image', file);
             data.append('text', this.textPost);
             axios.post('/profile/sendpost/' + $id, data).then(function (response) {
-                _this.posts.unshift({ text: response.data.text, created_at: response.data.created_at, path: response.data.file.path });
+                _this.posts.unshift({ id: response.data.id, text: response.data.text, created_at: response.data.created_at, path: response.data.file.path });
                 _this.$forceUpdate();
             });
-            //this.$refs.imagePost.files[0]
         },
-        getPosts: function getPosts($id) {
-            alert($id);
-            //axios.post(path,{
-            //
-            //}).then(response => {
-            //    this.posts = response.data;
-            //});
+        sendComment: function sendComment($userid, $postid) {
+            var _this2 = this;
+
+            this.postid = $postid;
+            axios.post('/profile/comment/' + $postid, {
+                userid: $userid,
+                text: this.newComment
+            }).then(function (response) {
+                _this2.comments.push({ text: response.data.text, name: response.data.user.name, post_id: response.data.post_id });
+                location.reload();
+            });
         }
 
     }

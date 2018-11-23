@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\File;
 use App\Models\Log;
 use App\Models\Post;
@@ -13,6 +14,10 @@ class PostController extends Controller
 
     public function send($id,Request $request)
     {
+        $request->validate([
+            'image' => 'between:1,1000|mimes:jpeg,jpg,png|dimensions:min_width=400,min_height=150|dimensions:max_width=1280,max_height=1280',
+            'text' => 'max:500'
+        ]);
         $text = $request->text;
         $posts = Post::create([
             'users_id' => $id,
@@ -46,4 +51,5 @@ class PostController extends Controller
 
         return $text;
     }
+
 }
