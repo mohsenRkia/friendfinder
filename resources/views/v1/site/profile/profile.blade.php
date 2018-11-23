@@ -149,7 +149,7 @@
                                     </div>
                                     <div class="reaction">
                                         <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
-                                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 5</a>
                                     </div>
                                     <div class="line-divider"></div>
                                     <div class="post-text">
@@ -167,7 +167,7 @@
                                     </div>
                                     <div class="post-comment">
                                         <img src="/uploads/avatars/uplode/{{$profile->avatar}}" alt="" class="profile-photo-sm" />
-                                        <input type="text" class="form-control" placeholder="Post a comment" v-model="newComment" v-once>
+                                        <input type="text" class="form-control" placeholder="Post a comment" v-model="newComment">
                                         <button class="btn btn-success" @click="sendComment({{Auth::user()->id}},post.id)">Send</button>
                                     </div>
                                 </div>
@@ -217,8 +217,15 @@
                                         <p class="text-muted">{{$post->created_at}}</p>
                                     </div>
                                     <div class="reaction">
-                                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
-                                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                                        <a class="btn text-green" @click="like({{$post->id}},{{Auth::user()->id}},$event)">
+                                            <i class="icon ion-thumbsup">
+                                                @if($post->like)
+                                                    {{$post->like->vote}}
+                                                    @else
+                                                0
+                                                    @endif
+                                            </i>
+                                        </a>
                                     </div>
                                     <div class="line-divider"></div>
                                     <div class="post-text">

@@ -26,8 +26,10 @@ class ProfileController extends Controller
             $friend = Friend::where([['users_id',Auth::user()->id], ['myfriend_id',$id]])->first();
             $follower = count(Friend::where([['myfriend_id',$id]])->get());
             $following = count(Friend::where('users_id',$id)->get());
+
             $posts = Post::where('users_id',$id)
                 ->with('file')
+                ->with('like')
                 ->with(['comments' => function($q){
                     $q->with(['user' => function($u){
                         $u->with('profile');

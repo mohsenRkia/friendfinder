@@ -73,6 +73,10 @@ Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
         'uses' => 'CommentController@send',
         'as' => 'comment.send'
     ]);
+    Route::post('/like/{id}',[
+        'uses' => 'LikeController@add',
+        'as' => 'like.add'
+    ]);
 });
 
 

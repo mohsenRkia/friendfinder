@@ -38,7 +38,9 @@ const profile = new Vue({
         posts:[],
         postid:"",
         newComment:"",
-        comments:[]
+        comments:[],
+        likeValue:0,
+        postlikeid:""
     },
     methods:{
         addFriend:function($friendId,$currentUserId,e){
@@ -77,6 +79,17 @@ const profile = new Vue({
             });
 
         },
+        like:function ($postid,$userid,e) {
+            var value = Number(e.target.innerText);
+            e.target.innerText = value+=1;
+
+            axios.post('/profile/like/'+$postid,{
+                userid : $userid,
+                vote: e.target.innerText
+            })
+
+
+        }
 
     }
 });
