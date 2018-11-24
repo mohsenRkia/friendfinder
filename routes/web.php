@@ -57,8 +57,8 @@ Route::group(['prefix' => 'user','middleware' => 'verified'],function (){
 Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
     //USER PROFILE
     Route::get('/{id}/{name}',[
-        'uses' => 'ProfileController@profile',
-        'as' => 'user.profile.index'
+        'uses' => 'ProfileController@timeline',
+        'as' => 'user.profile.timeline'
     ]);
     Route::post('/follow/{id}',[
         'uses' => 'ProfileController@follow',
@@ -76,6 +76,11 @@ Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
     Route::post('/like/{id}',[
         'uses' => 'LikeController@add',
         'as' => 'like.add'
+    ]);
+
+    Route::get('/about/{id}/{name}',[
+        'uses' => 'ProfileController@about',
+        'as' => 'user.profile.about'
     ]);
 });
 
