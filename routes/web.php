@@ -87,6 +87,10 @@ Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
         'uses' => 'ProfileController@friends',
         'as' => 'user.profile.friends'
     ]);
+    Route::get('/album/{id}/{name}',[
+        'uses' => 'ProfileController@album',
+        'as' => 'user.profile.album'
+    ]);
 });
 
 

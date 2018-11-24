@@ -32,9 +32,9 @@
                     </div>
                     <div class="col-md-9">
                         <ul class="list-inline profile-menu">
-                            <li><a href="timeline.html" class="active">Timeline</a></li>
+                            <li><a href="{{route('user.profile.timeline',['id' => $user->id,'name' => $user->name])}}" class="active">Timeline</a></li>
                             <li><a href="{{route('user.profile.about',['id' => $user->id,'name' => $user->name])}}">About</a></li>
-                            <li><a href="timeline-album.html">Album</a></li>
+                            <li><a href="{{route('user.profile.album',['id' => $user->id,'name' => $user->name])}}">Album</a></li>
                             <li><a href="{{route('user.profile.friends',['id' => $user->id,'name' => $user->name])}}">Friends</a></li>
                         </ul>
                         <ul class="follow-me list-inline">

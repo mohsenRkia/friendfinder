@@ -94,4 +94,16 @@ class ProfileController extends Controller
         //dd($user->toArray());
         return view('v1.site.profile.pages.friends',compact('user'));
     }
+
+    public function album($id,$name)
+    {
+        $user = User::find($id)->where('name',$name)
+            ->with(['posts' => function($q){
+                $q->with('file');
+            }])
+            ->first();
+
+        //dd($user->toArray());
+        return view('v1.site.profile.pages.album',compact(['user']));
+    }
 }

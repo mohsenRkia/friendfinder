@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\helpers\deffForHumans;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -22,6 +23,11 @@ class Post extends Model
     public function like()
     {
         return $this->hasOne(Like::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }
