@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Comment;
+use App\Models\Friend;
 use App\Models\Profile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -37,5 +38,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function friends()
+    {
+        return $this->hasMany(Friend::class,'users_id');
     }
 }

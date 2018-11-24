@@ -82,6 +82,11 @@ Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
         'uses' => 'ProfileController@about',
         'as' => 'user.profile.about'
     ]);
+
+    Route::get('/friends/{id}/{name}',[
+        'uses' => 'ProfileController@friends',
+        'as' => 'user.profile.friends'
+    ]);
 });
 
 

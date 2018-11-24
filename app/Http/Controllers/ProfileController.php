@@ -79,4 +79,18 @@ class ProfileController extends Controller
         $profile = Profile::where('user_id',$id)->first();
         return view('v1.site.profile.pages.about',compact(['profile']));
     }
+
+    public function friends($id,$name)
+    {
+        $user = User::find($id)->where('name',$name)
+            ->with(['friends' => function($q){
+                $q->with('profile')
+                ->with('user');
+            }])
+            ->first();
+
+
+        //dd($user->toArray());
+        return view('v1.site.profile.pages.friends',compact('user'));
+    }
 }

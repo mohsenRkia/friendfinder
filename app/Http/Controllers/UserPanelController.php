@@ -20,7 +20,7 @@ class UserPanelController extends Controller
     public function edit($id,Profile $profile)
     {
         $firstInfo = User::find($id);
-        $secondInfo = $profile->where('users_id' , $id)->get();
+        $secondInfo = $profile->where('user_id' , $id)->get();
 
         return view('v1.user.edit',compact(['firstInfo' , 'secondInfo']));
 
@@ -53,7 +53,7 @@ class UserPanelController extends Controller
 
         ]);
 
-        $profile = Profile::where('users_id',$user->id)->first();
+        $profile = Profile::where('user_id',$user->id)->first();
 
         if ($request->file('avatar')){
             $avatar = $request->file('avatar');
