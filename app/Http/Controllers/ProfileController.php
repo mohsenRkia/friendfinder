@@ -84,6 +84,7 @@ class ProfileController extends Controller
     {
         $user = User::find($id)->where('name',$name)
             ->with(['friends' => function($q){
+                $q->where('iswhat',1);
                 $q->with('profile')
                 ->with('user');
             }])
