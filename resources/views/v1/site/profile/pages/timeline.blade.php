@@ -87,10 +87,6 @@ Your Profile {{$user->name}}
                                             </span></h5>
                         <p class="text-muted">@{{post.created_at}}</p>
                     </div>
-                    <div class="reaction">
-                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
-                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 5</a>
-                    </div>
                     <div class="line-divider"></div>
                     <div class="post-text">
                         <p>

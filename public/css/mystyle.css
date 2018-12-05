@@ -53,3 +53,6 @@ span > i.ion-images{
     font-size: 20px;
     cursor: pointer;
 }
+.chat-room ul.contact-list li a .contact .msg-preview small{
+    position: unset;
+}

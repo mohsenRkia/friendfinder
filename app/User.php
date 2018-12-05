@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Chat;
 use App\Models\Comment;
 use App\Models\Friend;
 use App\Models\Post;
@@ -50,4 +51,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Post::class,'users_id');
     }
+
+
 }

@@ -13930,9 +13930,24 @@ var profile = new Vue({
         newComment: "",
         comments: [],
         likeValue: 0,
-        postlikeid: ""
+        postlikeid: "",
+        currentUser: "",
+        textMessage: ""
     },
     methods: {
+        sendIdChat: function sendIdChat($receiverId) {
+            this.currentUser = $receiverId;
+            this.$forceUpdate();
+        },
+        sendMessage: function sendMessage($senderId) {
+
+            axios.post('/profile/chats/send/' + $senderId, {
+                receiverId: this.currentUser,
+                senderId: $senderId,
+                text: this.textMessage
+            });
+            this.textMessage = "";
+        },
         addFriend: function addFriend($friendId, $currentUserId, e) {
             axios.post('/profile/follow/' + $friendId, {
                 currentUserId: $currentUserId
@@ -13957,6 +13972,8 @@ var profile = new Vue({
                 _this.posts.unshift({ id: response.data.id, text: response.data.text, created_at: response.data.created_at, path: response.data.file.path });
                 _this.$forceUpdate();
             });
+
+            this.textPost = "";
         },
         sendComment: function sendComment($userid, $postid) {
             var _this2 = this;
@@ -13978,8 +13995,12 @@ var profile = new Vue({
                 userid: $userid,
                 vote: e.target.innerText
             });
-        }
+        },
+        getItemVue: function getItemVue() {}
 
+    },
+    mounted: function mounted() {
+        console.log();
     }
 });
 

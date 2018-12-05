@@ -54,6 +54,9 @@
 <script src="/js/app.js"></script>
 <script src="/js/jquery.appear.min.js"></script>
 <script src="/js/jquery.incremental-counter.js"></script>
+
+@yield('otherjs')
+
 <script src="/js/script.js"></script>
 
 

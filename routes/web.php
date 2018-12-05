@@ -22,7 +22,6 @@ Route::get('/',[
     'as' => 'home.index'
 ]);
 
-
 // ADMIN PANEL
 Route::group(['prefix' => 'admin'],function (){
 
@@ -90,6 +89,16 @@ Route::group(['prefix' => 'profile','middleware' => 'verified'],function (){
     Route::get('/album/{id}/{name}',[
         'uses' => 'ProfileController@album',
         'as' => 'user.profile.album'
+    ]);
+
+    Route::get('/chats/{id}/{name}',[
+        'uses' => 'ChatController@index',
+        'as' => 'user.chat.index'
+    ]);
+
+    Route::post('/chats/send/{id}',[
+        'uses' => 'ChatController@send',
+        'as' => 'user.chat.send'
     ]);
 });
 

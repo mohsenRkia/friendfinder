@@ -1,10 +1,6 @@
 @extends('v1.site.layouts.layouts')
 
 
-
-
-
-
 @section('content')
 
     <!-- Top Banner
@@ -120,12 +116,12 @@
                     </li>
                     <li>
                         <div class="fact-icon"><i class="icon ion-images"></i></div>
-                        <h3 class="text-white">21,01,242</h3>
+                        <h3 class="text-white">{{$countPosts}}</h3>
                         <p>Posts published</p>
                     </li>
                     <li>
                         <div class="fact-icon"><i class="icon ion-checkmark-round"></i></div>
-                        <h3 class="text-white">41,242</h3>
+                        <h3 class="text-white">{{$onlineUsersNumber}}</h3>
                         <p>People online</p>
                     </li>
                 </ul>
@@ -139,88 +135,74 @@
         <div class="container wrapper">
             <h1 class="section-title slideDown">live feed</h1>
             <ul class="online-users list-inline slideUp">
-                <li><a href="#" title="Alexis Clark"><img src="images/users/user-5.jpg" alt="" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="#" title="James Carter"><img src="images/users/user-6.jpg" alt="" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="#" title="Robert Cook"><img src="images/users/user-7.jpg" alt="" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="#" title="Richard Bell"><img src="images/users/user-8.jpg" alt="" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="#" title="Anna Young"><img src="images/users/user-9.jpg" alt="" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
-                <li><a href="#" title="Julia Cox"><img src="images/users/user-10.jpg" alt="" class="img-responsive profile-photo" /><span class="online-dot"></span></a></li>
+                @foreach($usersOnline as $onlines)
+                <li>
+                    <a href="{{route('user.profile.timeline',['id' => $onlines->id,'name' => $onlines->name])}}" title="{{$onlines->name}}">
+                        <img src="/uploads/avatars/uplode/{{$onlines->profile->avatar}}" alt="" class="img-responsive profile-photo" />
+                        <span class="online-dot"></span>
+                    </a>
+                </li>
+                @endforeach
             </ul>
             <h2 class="sub-title">see what’s happening now</h2>
             <div class="row">
                 <div class="col-md-4 col-sm-6 offset-md-2">
+                    @foreach($logsFirst as $fLogs)
                     <div class="feed-item">
-                        <img src="images/users/user-1.jpg" alt="user" class="img-responsive profile-photo-sm" />
+                        <img src="/uploads/avatars/uplode/{{$fLogs->user->profile->avatar}}" alt="user" class="img-responsive profile-photo-sm" />
                         <div class="live-activity">
-                            <p><a href="#" class="profile-link">Sarah</a> just posted a photo from Moscow</p>
-                            <p class="text-muted">20 Secs ago</p>
+                            <p><a href="{{route('user.profile.timeline',['id' => $fLogs->user->id,'name' => $fLogs->user->name])}}" class="profile-link">{{$fLogs->user->name}}</a>
+                                @switch($fLogs->activity)
+                                    @case(1)
+                                    Registered
+                                    @break
+                                    @case(2)
+                                    Edited Information
+                                    @break
+                                    @case(3)
+                                    Posted
+                                    @break
+                                    @case(4)
+                                    Make Friend With Somone
+                                    @break
+                                    @case(5)
+                                    Commented on a friend Post
+                                    @break
+                                @endswitch
+                            </p>
+                            <p class="text-muted">{{$fLogs->created_at}}</p>
                         </div>
                     </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-4.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">John</a> Published a post from Sydney</p>
-                            <p class="text-muted">1 min ago</p>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-10.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Julia</a> Updated her status from London</p>
-                            <p class="text-muted">5 mins ago</p>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-3.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Sophia</a> Share a photo from Virginia</p>
-                            <p class="text-muted">10 mins ago</p>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-2.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Linda</a> just posted a photo from Toronto</p>
-                            <p class="text-muted">20 mins ago</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="col-md-4 col-sm-6">
+                    @foreach($logsSecond as $sLogs)
                     <div class="feed-item">
-                        <img src="images/users/user-17.jpg" alt="user" class="img-responsive profile-photo-sm" />
+                        <img src="/uploads/avatars/uplode/{{$sLogs->user->profile->avatar}}" alt="user" class="img-responsive profile-photo-sm" />
                         <div class="live-activity">
-                            <p><a href="#" class="profile-link">Nora</a> Shared an article from Ohio</p>
-                            <p class="text-muted">22 mins ago</p>
+                            <p><a href="{{route('user.profile.timeline',['id' => $sLogs->user->id,'name' => $sLogs->user->name])}}" class="profile-link">{{$sLogs->user->name}}</a>
+                                @switch($sLogs->activity)
+                                    @case(1)
+                                    Registered
+                                    @break
+                                    @case(2)
+                                    Edited Information
+                                    @break
+                                    @case(3)
+                                    Posted
+                                    @break
+                                    @case(4)
+                                    Make Friend With Somone
+                                    @break
+                                    @case(5)
+                                    Commented on a friend Post
+                                    @break
+                                @endswitch
+                            </p>
+                            <p class="text-muted">{{$sLogs->created_at}}</p>
                         </div>
                     </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-18.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Addison</a> Created a poll from Barcelona</p>
-                            <p class="text-muted">23 mins ago</p>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-11.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Diana</a> Posted a video from Captown</p>
-                            <p class="text-muted">27 mins ago</p>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-1.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Sarah</a> Shared friend's post from Moscow</p>
-                            <p class="text-muted">30 mins ago</p>
-                        </div>
-                    </div>
-                    <div class="feed-item">
-                        <img src="images/users/user-16.jpg" alt="user" class="img-responsive profile-photo-sm" />
-                        <div class="live-activity">
-                            <p><a href="#" class="profile-link">Emma</a> Started a new job at Torronto</p>
-                            <p class="text-muted">33 mins ago</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
