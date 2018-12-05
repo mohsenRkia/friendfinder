@@ -22,6 +22,15 @@ Route::get('/',[
     'as' => 'home.index'
 ]);
 
+Route::get('/contact',[
+    'uses' => 'ContactController@index',
+    'as' => 'contact.index'
+]);
+Route::post('/contact/send',[
+    'uses' => 'ContactController@send',
+    'as' => 'contact.send'
+]);
+
 // ADMIN PANEL
 Route::group(['prefix' => 'admin'],function (){
 

@@ -13932,9 +13932,38 @@ var profile = new Vue({
         likeValue: 0,
         postlikeid: "",
         currentUser: "",
-        textMessage: ""
+        textMessage: "",
+        //PMs
+        namePm: "",
+        emailPm: "",
+        phonePm: "",
+        textPm: "",
+        validationErrors: []
     },
     methods: {
+        sendPM: function sendPM(e) {
+            var _this = this;
+
+            this.validationErrors = [];
+            axios.post('/contact/send', {
+                name: this.namePm,
+                email: this.emailPm,
+                phone: this.phonePm,
+                text: this.textPm
+            }).then(function (response) {
+                e.target.className = "btn btn-success";
+                e.target.innerHTML = "Your message has been successfully sent";
+                _this.namePm = "";
+                _this.emailPm = "";
+                _this.phonePm = "";
+                _this.textPm = "";
+            }).catch(function (error) {
+                if (error.response.status == 422) {
+                    _this.validationErrors.push(error.response.data.errors);
+                    _this.$forceUpdate();
+                }
+            });
+        },
         sendIdChat: function sendIdChat($receiverId) {
             this.currentUser = $receiverId;
             this.$forceUpdate();
@@ -13962,28 +13991,28 @@ var profile = new Vue({
             });
         },
         sendPost: function sendPost($id) {
-            var _this = this;
+            var _this2 = this;
 
             var data = new FormData();
             var file = this.$refs.imagePost.files[0];
             data.append('image', file);
             data.append('text', this.textPost);
             axios.post('/profile/sendpost/' + $id, data).then(function (response) {
-                _this.posts.unshift({ id: response.data.id, text: response.data.text, created_at: response.data.created_at, path: response.data.file.path });
-                _this.$forceUpdate();
+                _this2.posts.unshift({ id: response.data.id, text: response.data.text, created_at: response.data.created_at, path: response.data.file.path });
+                _this2.$forceUpdate();
             });
 
             this.textPost = "";
         },
         sendComment: function sendComment($userid, $postid) {
-            var _this2 = this;
+            var _this3 = this;
 
             this.postid = $postid;
             axios.post('/profile/comment/' + $postid, {
                 userid: $userid,
                 text: this.newComment
             }).then(function (response) {
-                _this2.comments.push({ text: response.data.text, name: response.data.user.name, post_id: response.data.post_id });
+                _this3.comments.push({ text: response.data.text, name: response.data.user.name, post_id: response.data.post_id });
                 location.reload();
             });
         },

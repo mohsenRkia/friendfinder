@@ -42,9 +42,39 @@ const profile = new Vue({
         likeValue:0,
         postlikeid:"",
         currentUser:"",
-        textMessage:""
+        textMessage:"",
+        //PMs
+        namePm:"",
+        emailPm:"",
+        phonePm:"",
+        textPm:"",
+        validationErrors:[],
     },
     methods:{
+        sendPM:function(e){
+            this.validationErrors = [];
+            axios.post('/contact/send',{
+                name: this.namePm,
+                email: this.emailPm,
+                phone: this.phonePm,
+                text: this.textPm
+            }).then(response => {
+                e.target.className = "btn btn-success";
+                e.target.innerHTML = "Your message has been successfully sent";
+                this.namePm = "";
+                this.emailPm = "";
+                this.phonePm = "";
+                this.textPm = "";
+
+
+            }).catch(error => {
+                if (error.response.status == 422){
+                    this.validationErrors.push(error.response.data.errors);
+                    this.$forceUpdate();
+                }
+
+            })
+        },
         sendIdChat:function($receiverId){
             this.currentUser = $receiverId;
             this.$forceUpdate();
