@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Friend;
 use App\Models\Log;
+use App\Models\Post;
 use App\Models\Profile;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,13 @@ class UserPanelController extends Controller
 {
     public function index()
     {
-        return view('v1.user.index');
+        $user = Auth::user()->id;
+        $countPosts = count(Post::where('users_id',$user)->get());
+        $followers = count(Friend::where('myfriend_id',$user)->get());
+        $following = count(Friend::where('users_id',$user)->get());
+        $comments = count(Comment::where('user_id',$user)->get());
+
+        return view('v1.user.index',compact(['countPosts','followers','following','comments']));
     }
 
     public function edit($id,Profile $profile)
