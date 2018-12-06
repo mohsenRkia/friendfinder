@@ -32,16 +32,21 @@ Route::post('/contact/send',[
 ]);
 
 // ADMIN PANEL
-Route::group(['prefix' => 'admin'],function (){
+Route::group(['prefix' => 'admin','middleware' => ['verified','isadmin']],function (){
 
     Route::get('/',[
         'uses' => 'AdminPanelController@index',
         'as' => 'admin.index'
     ]);
+
+    Route::get('/edit/{id}',[
+        'uses' => 'AdminPanelController@edit',
+        'as' => 'admin.edit'
+    ]);
 });
 
 // USER PANEL
-Route::group(['prefix' => 'user','middleware' => 'verified'],function (){
+Route::group(['prefix' => 'user','middleware' => ['verified','isuser']],function (){
 
     Route::get('/',[
         'uses' => 'UserPanelController@index',
