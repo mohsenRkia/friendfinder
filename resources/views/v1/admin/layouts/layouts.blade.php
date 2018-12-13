@@ -66,12 +66,18 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="/js/admin/metisMenu/metisMenu.min.js"></script>
 
+<!-- DataTables JavaScript -->
+<script src="/js/admin/jquery/jquery.dataTables.min.js"></script>
+<script src="/js/admin/bootstrap/dataTables.bootstrap.min.js"></script>
+
 <!-- Morris Charts JavaScript -->
 <script src="/js/admin/raphael/raphael.min.js"></script>
 <script src="/js/admin/morris/morris.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="/js/admin/sb-admin-2.js"></script>
+
+
 
 </body>
 

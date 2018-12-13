@@ -2,18 +2,24 @@
 
 namespace App;
 
-use App\Models\Chat;
 use App\Models\Comment;
 use App\Models\Friend;
 use App\Models\Post;
 use App\Models\Profile;
+use Elasticquent\ElasticquentTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Scout\Searchable;
+
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+    //use Searchable;
+    use ElasticquentTrait;
+
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -51,6 +57,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Post::class,'users_id');
     }
-
-
 }

@@ -1,7 +1,12 @@
 <header id="header" class="lazy-load">
     <nav class="navbar navbar-default navbar-fixed-top menu">
         <div class="container">
-            <input type="search">
+            <form action="{{route('search.index')}}" class="navbar-form navbar-right hidden-sm">
+                <div class="form-group">
+                    <i class="icon ion-android-search"></i>
+                    <input name="key" type="text" class="form-control" placeholder="Search users">
+                </div>
+            </form>
             <hr>
             <a href="{{route('home.index')}}">Home</a>
             <hr>

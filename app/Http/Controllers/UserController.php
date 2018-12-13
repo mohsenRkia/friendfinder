@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\VerifyUsersRegistered;
+use App\Models\Friend;
 use App\Models\Log;
 use App\Models\Profile;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -51,5 +53,30 @@ class UserController extends Controller
         }else{
             dd("not register");
         }
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'key' => 'required'
+        ]);
+        $key = $request->key;
+        $resault = User::where('name','LIKE','%'.$key.'%')->with('profile')->paginate(20);
+
+        if (Auth::check()){
+            $friend_id = [];
+            $friends = Friend::where('users_id',Auth::user()->id)->get();
+
+            foreach ($friends as $friend){
+                $friend_id[] = $friend->myfriend_id;
+            }
+
+//dd($friend_id);
+            return view('v1.site.search',compact(['resault','key','friends','friend_id']));
+        }else{
+            return view('v1.site.search',compact(['resault','key']));
+        }
+
+
     }
 }

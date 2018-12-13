@@ -22,10 +22,22 @@ Route::get('/',[
     'as' => 'home.index'
 ]);
 
+Route::get('/search',[
+    'uses' => 'UserController@search',
+    'as' => 'search.index'
+]);
+
+Route::get('/profile',[
+    'uses' => 'ProfileController@profile',
+    'as' => 'profile'
+]);
+
+
 Route::get('/contact',[
     'uses' => 'ContactController@index',
     'as' => 'contact.index'
 ]);
+
 Route::post('/contact/send',[
     'uses' => 'ContactController@send',
     'as' => 'contact.send'
@@ -42,6 +54,10 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isadmin']],functi
     Route::get('/edit/{id}',[
         'uses' => 'AdminPanelController@edit',
         'as' => 'admin.edit'
+    ]);
+    Route::get('/users/list',[
+        'uses' => 'UserPanelController@list',
+        'as' => 'users.list'
     ]);
 });
 
@@ -62,8 +78,6 @@ Route::group(['prefix' => 'user','middleware' => ['verified','isuser']],function
         'uses' => 'UserPanelController@update',
         'as' => 'user.update'
     ]);
-
-
 
 });
 

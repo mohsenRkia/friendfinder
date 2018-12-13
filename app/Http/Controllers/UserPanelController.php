@@ -98,4 +98,12 @@ class UserPanelController extends Controller
     return redirect()->back();
     }
 
+    public function list()
+    {
+        $users = User::with('profile')->paginate(20);
+
+        //dd($users->toArray());
+        return view('v1.admin.list',compact(['users']));
+    }
+
 }

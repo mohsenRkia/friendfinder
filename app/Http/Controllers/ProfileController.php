@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    public function profile()
+    {
+        if (Auth::check()){
+            $user = Auth::user();
+
+            return redirect()->route('user.profile.timeline',['id' => $user->id , 'name' => $user->name]);
+        }else{
+            return redirect()->route('home.index');
+        }
+
+    }
 
     public function timeline($id,$name)
     {

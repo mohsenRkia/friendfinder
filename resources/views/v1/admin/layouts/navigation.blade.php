@@ -106,7 +106,9 @@
                 <li>
                     <a class="active" href="{{route('admin.edit',['id' => Auth::user()->id])}}"><i class="fa fa-dashboard fa-fw"></i> اطلاعات کاربری</a>
                 </li>
-
+                <li>
+                    <a class="active" href="{{route('users.list')}}"><i class="fa fa-dashboard fa-fw"></i>لیست کاربران</a>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
