@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ContactMail;
+use App\Mail\MailContact;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -35,5 +38,50 @@ class ContactController extends Controller
         ]);
 
         return $message;
+    }
+
+    public function messages()
+    {
+        $messages = Message::paginate(10);
+
+        return view('v1.admin.messages.index',compact(['messages']));
+    }
+
+    public function store($id)
+    {
+        $pm = Message::find($id);
+
+        return view('v1.admin.messages.store',compact(['pm']));
+    }
+
+    public function reply(Request $request)
+    {
+        $contactpm = $request->contactpm;
+        $email = $request->email;
+        $name = $request->name;
+
+
+        //dd($email);
+        //$sendMail = Mail::to($to)->send(new MailContact($contactpm));
+        $sendMail = ContactMail::dispatch($name,$email,$contactpm);
+
+        if ($sendMail){
+            return redirect()->route('message.index');
+        }else{
+            return redirect()->back();
+        }
+
+
+
+    }
+
+    public function destroy($id)
+    {
+        $pm = Message::find($id);
+
+        if ($pm->delete()){
+            return redirect()->back();
+        }
+        return redirect()->route('admin.index');
     }
 }

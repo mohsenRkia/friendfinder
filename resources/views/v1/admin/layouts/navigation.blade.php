@@ -109,6 +109,9 @@
                 <li>
                     <a class="active" href="{{route('users.list')}}"><i class="fa fa-dashboard fa-fw"></i>لیست کاربران</a>
                 </li>
+                <li>
+                    <a class="active" href="{{route('message.index')}}"><i class="fa fa-dashboard fa-fw"></i>پیام های دریافتی</a>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

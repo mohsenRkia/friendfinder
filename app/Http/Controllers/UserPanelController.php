@@ -100,7 +100,7 @@ class UserPanelController extends Controller
 
     public function list()
     {
-        $users = User::with('profile')->paginate(20);
+        $users = User::with('profile')->orderBy('created_at','DESC')->paginate(20);
 
         //dd($users->toArray());
         return view('v1.admin.list',compact(['users']));

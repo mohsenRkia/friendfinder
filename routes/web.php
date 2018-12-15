@@ -43,6 +43,7 @@ Route::post('/contact/send',[
     'as' => 'contact.send'
 ]);
 
+
 // ADMIN PANEL
 Route::group(['prefix' => 'admin','middleware' => ['verified','isadmin']],function (){
 
@@ -58,6 +59,24 @@ Route::group(['prefix' => 'admin','middleware' => ['verified','isadmin']],functi
     Route::get('/users/list',[
         'uses' => 'UserPanelController@list',
         'as' => 'users.list'
+    ]);
+    Route::get('/messages',[
+       'uses' => 'ContactController@messages',
+       'as' => 'message.index'
+    ]);
+    Route::get('/messages/delete/{id}',[
+        'uses' => 'ContactController@destroy',
+        'as' => 'message.delete'
+    ]);
+
+    route::get('/messages/store/{id}',[
+        'uses' => 'ContactController@store',
+        'as' => 'message.store'
+    ]);
+
+    Route::post('/messages/contact/send/pm',[
+        'uses' => 'ContactController@reply',
+        'as' => 'message.reply'
     ]);
 });
 

@@ -1,5 +1,6 @@
 @extends('v1.site.layouts.layouts')
 
+@section('title','صفحه اصلی')
 
 @section('content')
 

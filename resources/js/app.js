@@ -19,6 +19,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
+
 // const files = require.context('./', true, /\.vue$/i)
 
 // files.keys().map(key => {
@@ -49,6 +50,7 @@ const profile = new Vue({
         phonePm:"",
         textPm:"",
         validationErrors:[],
+
     },
     methods:{
         sendPM:function(e){
